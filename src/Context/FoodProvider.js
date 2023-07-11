@@ -1,15 +1,18 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import FoodContext from './FoodContext';
 
 export default function FoodProvider({ children }) {
   const [user, setUser] = useState('!');
+  const [recipes, setRecipes] = useState([]);
 
-  const store = useMemo(() => ({
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
+  const store = {
     user,
     setUser,
-  })[user]);
-
+    recipes,
+    setRecipes,
+  };
   return (
     <FoodContext.Provider value={ store }>
       <div>

@@ -1,15 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { fetchIngredient, fetchName, fetchFirstLetter } from '../services/fetchApi';
+import FoodContext from '../Context/FoodContext';
 
 function SearchBar() {
   const [radio, setRadio] = useState('');
   const [pedido, setPedido] = useState([]);
   const [input, setInput] = useState('');
+  const { setRecipes } = useContext(FoodContext);
 
   const handleInput = ({ target }) => {
     const { id } = target;
     setRadio(id);
   };
+
+  useEffect(() => {
+    let novoArray = [];
+    if (pedido) {
+      novoArray = pedido.meals || pedido.drinks;
+      setRecipes(pedido);
+    }
+    if (pedido.meals === null || pedido.drinks === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+
+    if (novoArray && novoArray.length === 1) {
+      const { pathname } = window.location;
+      let id = 0;
+      if (pathname === '/meals') {
+        id = novoArray[0].idMeal;
+      } else { id = novoArray[0].idDrink; }
+      window.location.href = `${pathname}/${id}`;
+    }
+  }, [pedido, setRecipes]);
 
   const firstLetter = 'first-letter';
 
@@ -41,7 +63,6 @@ function SearchBar() {
     setInput(target.value);
   };
 
-  console.log(pedido);
   return (
     <div>
       <div>

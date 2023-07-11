@@ -1,19 +1,17 @@
 import { useContext } from 'react';
 import Header from '../Components/Header';
 import FoodContext from '../Context/FoodContext';
-import '../style/recipes.css';
 
-function Recipes() {
+function Drinks() {
   const { recipes } = useContext(FoodContext);
-
-  const verifyRecipes = recipes.meals !== undefined && recipes.meals !== null;
+  const verifyRecipes = recipes.drinks !== undefined && recipes.drinks !== null;
   const numSlice = 12;
   return (
-    <div className="card-container">
+    <div className="meals">
       <Header />
-      Recipes
+      drinks
       { verifyRecipes
-        ? recipes.meals.slice(0, numSlice).map(({ strMeal, strMealThumb }, index) => (
+        ? recipes.drinks.slice(0, numSlice).map(({ strDrinkThumb, strDrink }, index) => (
           <div
             key={ index }
             className="teste"
@@ -23,12 +21,12 @@ function Recipes() {
               key={ index }
               data-testid={ `${index}-card-name` }
             >
-              {strMeal}
+              {strDrink}
             </p>
             <img
               key={ index }
               data-testid={ `${index}-card-img` }
-              src={ strMealThumb }
+              src={ strDrinkThumb }
               alt="foto da receita"
             />
           </div>
@@ -38,4 +36,4 @@ function Recipes() {
   );
 }
 
-export default Recipes;
+export default Drinks;
