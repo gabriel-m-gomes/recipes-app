@@ -1,16 +1,17 @@
-/* import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import FoodContext from './FoodContext';
 
 export default function FoodProvider({ children }) {
   const [user, setUser] = useState('!');
 
-  const store = {
-
-  };
+  const store = useMemo(() => ({
+    user,
+    setUser,
+  })[user]);
 
   return (
-    <FoodContext.Provider value={ { usuario: user } }>
+    <FoodContext.Provider value={ store }>
       <div>
         { children }
       </div>
@@ -18,6 +19,6 @@ export default function FoodProvider({ children }) {
   );
 }
 
-FoodProvider.prototype = {
+FoodProvider.propTypes = {
   children: PropTypes.node.isRequired,
-}; */
+};
