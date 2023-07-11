@@ -1,10 +1,9 @@
 const erro = 'Error ao obter dados da API.';
 const fetchIngredient = async (ingredient, pathname) => {
-  const baseUrl = 'https://www.themealdb.com/api/json/v1/1';
   let apiUrl = '';
 
   if (pathname === '/meals') {
-    apiUrl = `${baseUrl}/filter.php?i=${ingredient}`;
+    apiUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`;
   } else {
     apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`;
   }
