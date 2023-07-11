@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import App from './App';
+import Footer from './Components/Footer';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM
@@ -10,6 +11,7 @@ ReactDOM
   .render(
     <BrowserRouter>
       <App />
+      <Footer />
     </BrowserRouter>,
   );
 
