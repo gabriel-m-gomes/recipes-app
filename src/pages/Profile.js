@@ -58,6 +58,7 @@ function Profile(prop) {
       </div>
       {/* <Footer /> */}
     </>
+
   );
 }
 
