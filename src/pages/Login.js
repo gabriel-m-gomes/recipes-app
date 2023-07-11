@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import useFormInput from '../hooks/useFormInput';
+import '../style/login.css';
 
 function Login({ history }) {
   const password = useFormInput('');
@@ -22,22 +23,27 @@ function Login({ history }) {
   }
   return (
 
-    <div className="meals">
-      <input
-        type="email"
-        value={ email.value }
-        onChange={ email.onChange }
-        data-testid="email-input"
-      />
-      <input
-        type="password"
-        placeholder="password"
-        value={ password.value }
-        onChange={ password.onChange }
-        data-testid="password-input"
-      />
+    <div className="pai">
+      <div>
+        <input
+          className="input"
+          type="email"
+          value={ email.value }
+          onChange={ email.onChange }
+          data-testid="email-input"
+        />
+        <input
+          className="input"
+          type="password"
+          placeholder="password"
+          value={ password.value }
+          onChange={ password.onChange }
+          data-testid="password-input"
+        />
+      </div>
       <input
         type="submit"
+        className="submit"
         disabled={ !verifyLogin() }
         onClick={ handleButton }
         data-testid="login-submit-btn"
