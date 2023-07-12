@@ -1,17 +1,18 @@
 import Header from '../Components/Header';
+import '../style/recipes.css';
 import Footer from '../Components/Footer';
 import Recipe from '../Components/Recipes';
 
-function Drinks() {
+function Meals() {
   return (
-    <div className="meals">
+    <div className="card-container">
       <Header />
-      drinks
+      Recipes
 
-      <Footer />
       <Recipe />
+      <Footer />
     </div>
   );
 }
 
-export default Drinks;
+export default Meals;
