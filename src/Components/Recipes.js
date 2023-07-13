@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom/cjs/react-router-dom.min';
 import FoodContext from '../Context/FoodContext';
-import { fetchCategory } from '../services/fetchApi';
+
+import '../style/Recipes.css';
+
 
 function Recipe() {
   const location = useLocation();
@@ -51,9 +53,10 @@ function Recipe() {
   };
 
   return (
-    <div>
-      <div className="corpo">
-        { map && map.slice(0, numSlice).map((recipe, index) => (
+    <div className="recipes">
+      { verifyPedido
+        ? map.slice(0, numSlice).map((recipe, index) => (
+
           <Link
             key={ `recipe-card-${index}` }
             className="teste"

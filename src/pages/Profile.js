@@ -26,7 +26,7 @@ function Profile(prop) {
   }
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <div className="profile">
         <div>
           {/* <img src="" alt="" /> */}

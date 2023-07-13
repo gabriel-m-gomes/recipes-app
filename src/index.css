@@ -19,4 +19,25 @@ code {
   margin: auto;
   margin-top: 100px;
   border-radius: 30px;
+  overflow: auto;
+  position: relative;
+}
+
+div {
+  position: relative;
+}
+
+.footer {
+  position: fixed;
+  bottom: 13.5rem;
+}
+
+.fixed {
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
+}
+
+.conteiner-details {
+  position: relative;
 }
