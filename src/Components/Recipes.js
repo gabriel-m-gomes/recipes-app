@@ -1,25 +1,59 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom/cjs/react-router-dom.min';
 import FoodContext from '../Context/FoodContext';
+import { fetchCategory } from '../services/fetchApi';
 
 function Recipe() {
   const location = useLocation();
   const { pathname } = location;
   const { recipes, pedido } = useContext(FoodContext);
-
-  const novoRecipes = recipes?.meals || recipes?.drinks;
+  const [categories, setCategories] = useState([]);
+  const [arrayCategory, setArrayCategory] = useState([]);
+  const [toogle, setToogle] = useState(true);
+  //
+  const verifyArray = arrayCategory.length > 0 ? arrayCategory : '';
+  const novoRecipes = recipes?.meals || recipes?.drinks || verifyArray;
   const strRecipe = pathname === '/meals' ? 'strMeal' : 'strDrink';
   const strImg = pathname === '/meals' ? 'strMealThumb' : 'strDrinkThumb';
   const strId = pathname === '/meals' ? 'idMeal' : 'idDrink';
+  const rota = pathname === '/meals' ? 'meals' : 'drinks';
+
   const map = novoRecipes || pedido;
   const numSlice = 12;
 
-  const verifyPedido = pedido !== undefined && pedido !== null;
+  useEffect(() => {
+    const fetchCategoryButton = async () => {
+      const numCategory = 5;
+      const path = pathname === '/meals' ? 'themeal' : 'thecocktail';
+      const responseCategory = await fetch(`https://www.${path}db.com/api/json/v1/1/list.php?c=list`);
+      const dataCategory = await responseCategory.json();
+      const filterCategory = dataCategory[rota]
+        .slice(0, numCategory).map((data) => data);
+
+      setCategories(filterCategory);
+    };
+    fetchCategoryButton();
+  }, [rota, pathname]);
+
+  const handleBut = async ({ target: { name } }) => {
+    const dataCategory = (await fetchCategory(name, pathname));
+    setToogle(!toogle);
+    if (toogle) {
+      const filterCategory = dataCategory[rota].slice(0, numSlice).map((data) => data);
+      setArrayCategory(filterCategory);
+    } else {
+      setArrayCategory(pedido);
+    }
+  };
+
+  const handleAll = () => {
+    setArrayCategory(pedido);
+  };
 
   return (
     <div>
-      { verifyPedido
-        ? map.slice(0, numSlice).map((recipe, index) => (
+      <div className="corpo">
+        { map && map.slice(0, numSlice).map((recipe, index) => (
           <Link
             key={ `recipe-card-${index}` }
             className="teste"
@@ -40,8 +74,22 @@ function Recipe() {
             />
 
           </Link>
-        ))
-        : ''}
+        ))}
+      </div>
+      <div>
+        {categories.map((categoryName, index) => (
+          <button
+            className="red"
+            key={ index }
+            data-testid={ `${categoryName.strCategory}-category-filter` }
+            name={ categoryName.strCategory }
+            onClick={ handleBut }
+          >
+            {categoryName.strCategory}
+          </button>
+        ))}
+        <button onClick={ handleAll } data-testid="All-category-filter">All</button>
+      </div>
     </div>
   );
 }
