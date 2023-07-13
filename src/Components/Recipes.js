@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useLocation, Link } from 'react-router-dom/cjs/react-router-dom.min';
 import FoodContext from '../Context/FoodContext';
+import '../style/Recipes.css';
 
 function Recipe() {
   const location = useLocation();
@@ -17,7 +18,7 @@ function Recipe() {
   const verifyPedido = pedido !== undefined && pedido !== null;
 
   return (
-    <div>
+    <div className="recipes">
       { verifyPedido
         ? map.slice(0, numSlice).map((recipe, index) => (
           <Link

@@ -6,10 +6,8 @@ function Drinks() {
   return (
     <div className="meals">
       <Header />
-      drinks
-
-      <Footer />
       <Recipe />
+      <Footer />
     </div>
   );
 }
