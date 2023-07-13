@@ -11,7 +11,17 @@ p {
 
 img {
   border-radius: 50%;
-  height: 100px;
+  height: 60px;
   margin-bottom: 10px;
-  width: 100px;
+  width: 60px;
+}
+
+.corpo {
+  border: solid 3px black;
+}
+
+.red {
+  border: solid 3px red;
+  margin-bottom: 10vh;
+  padding: 15px;
 }

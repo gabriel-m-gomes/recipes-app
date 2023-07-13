@@ -10,6 +10,7 @@ export default function FoodProvider({ children }) {
   const [user, setUser] = useState('!');
   const [recipes, setRecipes] = useState([]);
   const [pedido, setPedido] = useState([]);
+  const [category, setCategory] = useState([]);
 
   const store = useMemo(() => ({
     user,
@@ -18,7 +19,9 @@ export default function FoodProvider({ children }) {
     setRecipes,
     pedido,
     setPedido,
-  }), [user, setUser, recipes, setRecipes, pedido, setPedido]);
+    category,
+    setCategory,
+  }), [user, setUser, recipes, setRecipes, pedido, setPedido, setCategory, category]);
 
   useEffect(() => {
     const searchRecipes = async () => {

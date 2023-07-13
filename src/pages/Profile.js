@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 
 function Profile(prop) {
