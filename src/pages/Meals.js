@@ -1,5 +1,5 @@
 import Header from '../Components/Header';
-import '../style/recipes.css';
+import '../style/Meals.css';
 import Footer from '../Components/Footer';
 import Recipe from '../Components/Recipes';
 

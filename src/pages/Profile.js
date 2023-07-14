@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Footer from '../Components/Footer';
+import Header from '../Components/Header';
 
 function Profile(prop) {
   const user = localStorage.getItem('email');

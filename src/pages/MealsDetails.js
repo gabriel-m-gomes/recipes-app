@@ -1,36 +1,75 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Details from '../hooks/DetailsRecipes';
+import '../style/Recipes.css';
 import RecommendationFoods from '../hooks/RecommendationFoods';
 import DoneFood from '../hooks/DoneFood';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+
+const copy = require('clipboard-copy');
 
 function MealsDetails({ match: { params: { id }, url } }) {
   const history = useHistory();
   const { searchIdFood, recipe, ingredients, measure } = Details();
   const { setPath, recipeRecommendations } = RecommendationFoods();
   const { button, textButton } = DoneFood(id, url.split('/')[1]);
+  const [copied, setCopied] = useState(false);
+
   const {
     strMealThumb,
     strMeal,
     strCategory,
     strInstructions,
     strYoutube,
+
   } = recipe;
 
   useEffect(() => {
     setPath(url.split('/')[1]);
     searchIdFood(url.split('/')[1], id);
-  }, [id, url]);
-  console.log(recipeRecommendations);
+  }, [id, url, searchIdFood, setPath]);
+
+  const handleShare = async () => {
+    setCopied(true);
+    copy(window.location.href);
+  };
+
+  const handleFavorite = () => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const { idMeal, strArea } = recipe;
+    const novoObj = {
+      id: idMeal,
+      type: 'meal',
+      nationality: strArea,
+      category: strCategory,
+      alcoholicOrNot: '',
+      name: strMeal,
+      image: strMealThumb,
+    };
+
+    // Verificar se o objeto já existe nos favoritos
+    const isDuplicate = favorites.some((favorite) => favorite.id === idMeal);
+
+    if (!isDuplicate) {
+      const updatedFavorites = [...favorites, novoObj];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavorites));
+    }
+  };
+
   return (
     <div className="conteiner-details">
       <div>
         <img data-testid="recipe-photo" src={ strMealThumb } alt="" />
-        <img data-testid="share-btn" src={ shareIcon } alt="compartilhar" />
-        <img data-testid="favorite-btn" src={ whiteHeartIcon } alt="favoritar" />
+        <button
+          onClick={ handleShare }
+        >
+          <img data-testid="share-btn" src={ shareIcon } alt="compartilhar" />
+        </button>
+        <button onClick={ handleFavorite }>
+          <img data-testid="favorite-btn" src={ whiteHeartIcon } alt="favoritar" />
+        </button>
       </div>
       <div>
         <h1 data-testid="recipe-title">{strMeal}</h1>
@@ -84,6 +123,7 @@ function MealsDetails({ match: { params: { id }, url } }) {
 
         )
       }
+      { copied && <p>Link copied!</p>}
     </div>
   );
 }

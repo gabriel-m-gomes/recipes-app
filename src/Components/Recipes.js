@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom/cjs/react-router-dom.min';
 import FoodContext from '../Context/FoodContext';
-
+import { fetchCategory } from '../services/fetchApi';
 import '../style/Recipes.css';
-
 
 function Recipe() {
   const location = useLocation();
   const { pathname } = location;
-  const { recipes, pedido } = useContext(FoodContext);
+  const { recipes, pedido, setRecipes } = useContext(FoodContext);
   const [categories, setCategories] = useState([]);
   const [arrayCategory, setArrayCategory] = useState([]);
   const [toogle, setToogle] = useState(true);
@@ -50,36 +49,36 @@ function Recipe() {
 
   const handleAll = () => {
     setArrayCategory(pedido);
+    setRecipes(pedido);
   };
 
   return (
     <div className="recipes">
-      { verifyPedido
-        ? map.slice(0, numSlice).map((recipe, index) => (
+      { map
+         && map.slice(0, numSlice).map((recipe, index) => (
 
-          <Link
-            key={ `recipe-card-${index}` }
-            className="teste"
-            data-testid={ `${index}-recipe-card` }
-            to={ `${pathname}/${recipe[strId]}` }
-          >
-            <p
-              key={ `card-name-${index}` }
-              data-testid={ `${index}-card-name` }
-            >
-              {recipe[strRecipe]}
-            </p>
-            <img
-              key={ `card-img-${index}` }
-              data-testid={ `${index}-card-img` }
-              src={ recipe[strImg] }
-              alt="foto da receita"
-            />
+           <Link
+             key={ `recipe-card-${index}` }
+             className="teste"
+             data-testid={ `${index}-recipe-card` }
+             to={ `${pathname}/${recipe[strId]}` }
+           >
+             <p
+               key={ `card-name-${index}` }
+               data-testid={ `${index}-card-name` }
+             >
+               {recipe[strRecipe]}
+             </p>
+             <img
+               key={ `card-img-${index}` }
+               data-testid={ `${index}-card-img` }
+               src={ recipe[strImg] }
+               alt="foto da receita"
+             />
 
-          </Link>
-        ))}
-      </div>
-      <div>
+           </Link>
+         ))}
+      <div className="buts">
         {categories.map((categoryName, index) => (
           <button
             className="red"
