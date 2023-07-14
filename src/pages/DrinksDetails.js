@@ -2,11 +2,12 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import Details from '../hooks/DetailsRecipes';
+import DoneFood from '../hooks/DoneFood';
 import RecommendationFoods from '../hooks/RecommendationFoods';
-import '../style/Recipes.css';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import DoneFood from '../hooks/DoneFood';
+import '../style/Recipes.css';
 
 const copy = require('clipboard-copy');
 
@@ -16,6 +17,7 @@ function DrinkDetails({ match: { params: { id }, url } }) {
   const { setPath, recipeRecommendations } = RecommendationFoods();
   const { button, textButton } = DoneFood(id, url.split('/')[1]);
   const [copied, setCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const {
     strDrinkThumb,
@@ -25,6 +27,15 @@ function DrinkDetails({ match: { params: { id }, url } }) {
     strAlcoholic,
 
   } = recipe;
+
+  useEffect(() => {
+    const favoritesLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favoritesLocalStorage) {
+      const isAlreadyFavorite = favoritesLocalStorage
+        .some((favorite) => favorite.id === id);
+      setIsFavorite(isAlreadyFavorite);
+    }
+  }, []);
 
   useEffect(() => {
     setPath(url.split('/')[1]);
@@ -37,6 +48,7 @@ function DrinkDetails({ match: { params: { id }, url } }) {
   };
 
   const handleFavorite = () => {
+    setIsFavorite(!isFavorite);
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const { idDrink } = recipe;
     const novoObj = {
@@ -54,6 +66,10 @@ function DrinkDetails({ match: { params: { id }, url } }) {
     if (!isDuplicate) {
       const updatedFavorites = [...favorites, novoObj];
       localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavorites));
+    } else {
+      const allButNotFavorites = favorites.filter((notFavorite) => notFavorite.id !== id);
+      console.log(allButNotFavorites);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(allButNotFavorites));
     }
   };
 
@@ -67,7 +83,21 @@ function DrinkDetails({ match: { params: { id }, url } }) {
         </button>
 
         <button onClick={ handleFavorite }>
-          <img data-testid="favorite-btn" src={ whiteHeartIcon } alt="favoritar" />
+          { isFavorite ? (
+            <img
+              data-testid="favorite-btn"
+              src={ blackHeartIcon }
+              alt="favoritar"
+            />
+
+          )
+            : (
+              <img
+                data-testid="favorite-btn"
+                src={ whiteHeartIcon }
+                alt="favoritar"
+              />
+            )}
         </button>
       </div>
       <div>
