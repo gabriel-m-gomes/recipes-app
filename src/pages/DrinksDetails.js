@@ -35,7 +35,7 @@ function DrinkDetails({ match: { params: { id }, url } }) {
         .some((favorite) => favorite.id === id);
       setIsFavorite(isAlreadyFavorite);
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     setPath(url.split('/')[1]);
@@ -68,7 +68,6 @@ function DrinkDetails({ match: { params: { id }, url } }) {
       localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavorites));
     } else {
       const allButNotFavorites = favorites.filter((notFavorite) => notFavorite.id !== id);
-      console.log(allButNotFavorites);
       localStorage.setItem('favoriteRecipes', JSON.stringify(allButNotFavorites));
     }
   };
