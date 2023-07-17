@@ -35,7 +35,7 @@ function MealsDetails({ match: { params: { id }, url } }) {
         .some((favorite) => favorite.id === id);
       setIsFavorite(isAlreadyFavorite);
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     setPath(url.split('/')[1]);
@@ -50,7 +50,6 @@ function MealsDetails({ match: { params: { id }, url } }) {
   const handleFavorite = () => {
     setIsFavorite(!isFavorite);
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    console.log(favorites);
     const { idMeal, strArea } = recipe;
     const novoObj = {
       id: idMeal,
@@ -70,7 +69,6 @@ function MealsDetails({ match: { params: { id }, url } }) {
       localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavorites));
     } else {
       const allButNotFavorites = favorites.filter((notFavorite) => notFavorite.id !== id);
-      console.log(allButNotFavorites);
       localStorage.setItem('favoriteRecipes', JSON.stringify(allButNotFavorites));
     }
   };
