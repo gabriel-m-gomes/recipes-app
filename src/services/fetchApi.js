@@ -90,10 +90,32 @@ const fetchCategory = async (category, pathname) => {
     return error;
   }
 };
+const fetchId = async (id, pathname) => {
+  let apiUrl = '';
+  if (pathname === `/meals/${id}/in-progress`) {
+    apiUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+    console.log(apiUrl);
+  } else {
+    apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  }
 
+  try {
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      throw new Error(erro);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
 export {
   fetchCategory,
   fetchIngredient,
   fetchName,
   fetchFirstLetter,
+  fetchId,
 };
