@@ -5,7 +5,6 @@ export default function DoneFood(id, url) {
   let inProgress = false;
   if (inProgressRecipes !== undefined) {
     inProgress = Object.keys(inProgressRecipes[url]).some((recipe) => recipe === id);
-    console.log(inProgress);
   }
   const button = doneRecipes.some((recipe) => recipe === id);
   return {
