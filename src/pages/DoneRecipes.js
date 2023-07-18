@@ -1,39 +1,63 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import Header from '../Components/Header';
 import shareIcon from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
 function DoneRecipes() {
-  const [copied, setCopied] = useState(false);
-
   const arrayMeals = JSON.parse(localStorage.getItem('doneRecipes'));
+  const [arrayFood, setArrayFod] = useState(arrayMeals);
+  const [copied, setCopied] = useState(false);
 
   const handleShare = async ({ target }) => {
     setCopied(true);
     const url = `http://localhost:3000/${target.className}s/${target.id}`;
     copy(url);
   };
+
+  const handleMels = () => {
+    const novoArray = JSON.parse(localStorage.getItem('doneRecipes'))
+      .filter((data) => data.type === 'meal');
+    setArrayFod(novoArray);
+  };
+
+  const handleDrink = () => {
+    const novoArray = JSON.parse(localStorage.getItem('doneRecipes'))
+      .filter((data) => data.type === 'drink');
+    setArrayFod(novoArray);
+  };
+
+  const handleAll = () => {
+    setArrayFod(arrayMeals);
+  };
   return (
     <div className="meals">
       <Header />
-      { arrayMeals
-      && arrayMeals
+      { arrayFood
+      && arrayFood
         .map((
           { image, category, name, type, id, doneDate, tags, nationality,
             alcoholicOrNot },
           index,
         ) => (
           <div key={ `name-${index}` }>
-            <p data-testid={ `${index}-horizontal-name` }>{name}</p>
+            <Link
+              to={ `${type}s/${id}` }
+            >
+              <p data-testid={ `${index}-horizontal-name` }>{name}</p>
+
+            </Link>
             <p data-testid={ `${index}-horizontal-top-text` }>
               {`${nationality} - ${category}`}
             </p>
-            <img
-              data-testid={ `${index}-horizontal-image` }
-              src={ image }
-              alt="foto da receita"
-            />
+            <Link to={ `${type}s/${id}` }>
+              <img
+                data-testid={ `${index}-horizontal-image` }
+                src={ image }
+                alt="foto da receita"
+              />
+            </Link>
             <br />
             <p data-testid={ `${index}-horizontal-top-text` }>{alcoholicOrNot}</p>
             <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p>
@@ -62,9 +86,9 @@ function DoneRecipes() {
           </div>
         ))}
       <br />
-      <button data-testid="filter-by-all-btn">All</button>
-      <button data-testid="filter-by-meal-btn">Meals</button>
-      <button data-testid="filter-by-drink-btn">Drinks</button>
+      <button data-testid="filter-by-all-btn" onClick={ handleAll }>All</button>
+      <button data-testid="filter-by-meal-btn" onClick={ handleMels }>Meals</button>
+      <button data-testid="filter-by-drink-btn" onClick={ handleDrink }>Drinks</button>
       { copied && <p>Link copied!</p>}
     </div>
   );
