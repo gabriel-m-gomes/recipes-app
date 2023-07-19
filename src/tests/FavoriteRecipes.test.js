@@ -135,7 +135,6 @@ describe('Teste da tela de receitas favoritas', () => {
     await waitFor(() => {
       const favoriteRecipe1 = screen.getByText('Receita 1');
       const favoriteRecipe2 = screen.getByText('Receita 2');
-
       expect(favoriteRecipe1).toBeInTheDocument();
       expect(favoriteRecipe2).toBeInTheDocument();
     });
