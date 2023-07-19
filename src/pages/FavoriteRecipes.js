@@ -19,7 +19,7 @@ function RecipesFavorites() {
   };
 
   const removeFavorite = (id) => {
-    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     console.log(favorites);
     const newFavorites = favorites.filter((favorite) => favorite.id !== id);
     console.log(newFavorites);
@@ -28,23 +28,23 @@ function RecipesFavorites() {
   };
   const handleMels = () => {
     const novoArray = JSON.parse(localStorage.getItem('favoriteRecipes'))
-      .filter((data) => data.type === 'meal');
+      .filter((data) => data.type === 'meal') || [];
     setDataFavorite(novoArray);
   };
 
   const handleDrink = () => {
     const novoArray = JSON.parse(localStorage.getItem('favoriteRecipes'))
-      .filter((data) => data.type === 'drink');
+      .filter((data) => data.type === 'drink') || [];
     setDataFavorite(novoArray);
   };
 
   const handleAll = () => {
-    const novoArray = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const novoArray = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     setDataFavorite(novoArray);
   };
 
   useEffect(() => {
-    const Lstorge = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const Lstorge = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     setDataFavorite(Lstorge);
   }, [favorit]);
 
@@ -118,6 +118,7 @@ function RecipesFavorites() {
             </button>
             {' '}
             <button
+              data-testid="share-btn"
               type="button"
               onClick={ handleShare }
             >
@@ -132,6 +133,7 @@ function RecipesFavorites() {
             </button>
             {' '}
             <button
+              data-testid="favorite-btn"
               type="button"
               onClick={ () => removeFavorite(obj.id) }
             >
