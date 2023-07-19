@@ -118,6 +118,7 @@ function RecipesFavorites() {
             </button>
             {' '}
             <button
+              data-testid="share-btn"
               type="button"
               onClick={ handleShare }
             >
@@ -132,6 +133,7 @@ function RecipesFavorites() {
             </button>
             {' '}
             <button
+              data-testid="favorite-btn"
               type="button"
               onClick={ () => removeFavorite(obj.id) }
             >

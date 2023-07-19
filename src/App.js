@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route } from 'react-router-dom/cjs/react-router-dom.min';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
-import RecipesFavorites from './pages/RecipesFavorites';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 import DoneRecipes from './pages/DoneRecipes';
 import DrinkDetails from './pages/DrinksDetails';
 import FoodProvider from './Context/FoodProvider';
@@ -27,7 +27,7 @@ function App() {
           <Route path="/drinks/:id/in-progress" component={ DrinksInProgress } />
           <Route path="/profile" component={ Profile } />
           <Route path="/done-recipes" component={ DoneRecipes } />
-          <Route path="/favorite-recipes" component={ RecipesFavorites } />
+          <Route path="/favorite-recipes" component={ FavoriteRecipes } />
         </FoodProvider>
       </Switch>
     </div>
