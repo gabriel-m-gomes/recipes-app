@@ -23,7 +23,7 @@ O projeto tem por objetivo a avaliação e prática dos conhecimentos adquiridos
 ## ANTES DE INICIALIZAR A APLICAÇÃO:
 
 1. Clone o repositório
-  * `git clone git@github.com:gabriel-m-gomes/Trybe-project-recipes-app.git`
+  * `git clone git@github.com:gabriel-m-gomes/recipes-app.git`
   * Entre na pasta do repositório que você acabou de clonar:
     * `cd Trybe-project-recipes-app`
 
